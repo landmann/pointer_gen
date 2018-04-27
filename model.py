@@ -260,23 +260,24 @@ class SummarizationModel(object):
         with tf.variable_scope('loss'):
           if FLAGS.pointer_gen:
             # Calculate the loss per step
-            # This is fiddly; we use tf.gather_nd to pick out the probabilities of the gold target words
             loss_per_step = [] # will be list length max_dec_steps containing shape (batch_size)
             batch_nums = tf.range(0, limit=hps.batch_size) # shape (batch_size)
             for dec_step, dist in enumerate(final_dists):
               targets = self._target_batch[:,dec_step] # The indices of the target words. shape (batch_size)
 
               if hps.loss_type=='nll':
-                indices = tf.stack( (batch_nums, targets), axis=1)
                 # Logistic Regression Loss given probability of actual word
+                # This is fiddly; we use tf.gather_nd to pick out the probabilities of the gold target words
+                indices = tf.stack( (batch_nums, targets), axis=1) #shape (batch_size, 2)
                 gold_probs = tf.gather_nd(dist, indices) # shape (batch_size). prob of correct words on this step
                 losses = -tf.log(gold_probs)
                 loss_per_step.append(losses)
 
               elif hps.loss_type=='emb_loss':
-                target_embeddings = tf.nn.embedding_lookup(embedding_weights, targets)
-                pred_indices = tf.reduce_max(dist, reduction_indices=[1]) # Indices of the words to be outputted. shape (batch_size)
-                pred_embeddings = tf.nn.embedding_lookup(embedding_weights, output_indices)
+                # Take the euclidean distance of the word embedding of the predicted word to the actual word.
+                target_embeddings = tf.nn.embedding_lookup(embedding, targets)
+                pred_indices = tf.argmax(dist, axis=0) # Indices of the words to be outputted. shape (batch_size)
+                pred_embeddings = tf.nn.embedding_lookup(embedding, pred_indices)
                 losses = tf.reduce_sum(tf.square(target_embeddings - pred_embeddings), axis=1) #L2 norm
                 loss_per_step.append(losses)
 

@@ -4,6 +4,8 @@ This repository contains modified code for the ACL 2017 paper *[Get To The Point
 
 ### What's in it for me?
 
-The goal of this repo is to serve as a tutorial for people just starting out with deep learning. This assumes you have some prior coding and a little bit of deep learning theory knowledge.  It goes step by step about what papers I read and how I ended up understanding this model's ins and outs, to the point where one is able to tweak the model to fit their needs. If you have any ideas of things we can change but don't know how to, please add your idea to the *Issues* handle and I'll address it at some point.
+The goal of this repo is to serve as a tutorial for people just starting out with deep learning.  It is certainly not exhaustive, but it's how I learned some TensorFlow. 
+
+You'll certainly get the most out of this notebook if you have some prior coding experience and know a bit of deep learning theory.  It goes step by step about what papers I read and how I ended up understanding this model's ins and outs.  Not only that, but also be able to tweak the model to explore your own ideas. If you have feedback or other ways you'd like to alter the model but don't know how to, please add your idea to the *Issues* handle and I'll address it at some point!
 
 
