@@ -9,57 +9,57 @@ The goal of this repo is to serve as a tutorial for people just starting out wit
 You'll certainly get the most out of this notebook if you have some prior coding experience and know a bit of deep learning theory.  It goes step by step about what papers I read and how I ended up understanding this model's ins and outs.  Not only that, but also be able to tweak the model to explore your own ideas. If you have feedback or other ways you'd like to alter the model but don't know how to, please add your idea to the *Issues* handle and I'll address it at some point!
 
 
-### Table of Contents
+# Table of Contents
 
-0. Before You Start
+### 0. Before You Start
 
    _Some Words_
 
-1. Getting the Code to Run
+### 1. Getting the Code to Run
    
    _Understand parameters and the types of outputs you'll get._
 
-2. Exploring Visualization Tools
+### 2. Exploring Visualization Tools
 
    _How to see exactly what your model is outputting_
 
-2. Modifying our own Dataset
+### 3. Modifying our own Dataset
 
    _Helps you understand the input and output formats, as well as the limitations the model presents given your own data._
 
-3. Using Pre-Trained Word Embeddings
+### 4. Using Pre-Trained Word Embeddings
 
    _Changing the embedding layer is a simple way to adapt your model without it breaking easily. Usually boosts performance!_
 
-4. Shuffling Sentences and Removing Words
+### 5. Shuffling Sentences and Removing Words
 
    _Will help you understand what exactly is being processed by the model._
 
-5. Teacher Forcing
+### 6. Teacher Forcing
 
    _A simple techinque, it lets the model deviate from the desired output just a little bit._
 
-6. Adding Mixture Coefficient to the Tranining
+### 7. Adding Mixture Coefficient to the Tranining
 
    _Implementing a method from another paper. Involves changing the beam decoder_
 
-7. Adding Another Attention Layer given an Input
+### 8. Adding Another Attention Layer given an Input
 
    _Delves into the attention module_
 
-8. Using Target Embedding as a Loss Function
+### 9. Using Target Embedding as a Loss Function
 
    _Simple tweak that delves into the nuances of differentaible components_
 
-9. Reinforcement Learning Loss Function
+### 10. Reinforcement Learning Loss Function
 
    _Implementing another paper's methods into this model._
 
-### Before You Start
+## 0. Before You Start
 
 In order to understand what you're getting into, I recommend you read a few papers. The first one, and most obvious one, is the one directly coming from the code's author, which comes with a beautifully written blog post, which you can find [here](http://www.abigailsee.com/2017/04/16/taming-rnns-for-better-summarization.html).  Another point to understand is a little bit about TensorFlow, but truthfully I knew very little as well when I dove into this paper first, so it's not necessary. Hopefully doing these modifications helps on this front.
 
-### Getting the Code to Run
+## 2. Getting the Code to Run
 
 
 
