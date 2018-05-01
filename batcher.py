@@ -68,6 +68,7 @@ class Example(object):
 
     # Process the article
     # Need to shuffle only the sentences within the hps.max_enc_steps.
+    original_article_clean = article
     sentences = article.split('\n')
     if (hps.keep_stopwords < 1.0) or (hps.keep_word < 1.0): 
       for i, sent in enumerate(sentences):
@@ -84,8 +85,10 @@ class Example(object):
           sent_processed.append(word)
         sentences[i] = ' '.join(sent_processed)
 
+    article = '\n'.join(sentences)
 
     if hps.shuffle_sentences:
+      sentences = article.split('\n')
       token_counter = 0
       for idx, sent in enumerate(sentences):
           token_counter += len(sent.split())
@@ -93,6 +96,7 @@ class Example(object):
             sentences[idx] = ' '.join(sent.split()[:hps.max_enc_steps- token_counter])
             break
       sentences = sentences[:idx+1]
+      
       sentences = [sent for sent in sentences if (sent!='\n' and sent!='')]
       random.shuffle(sentences)
       article_words = ' '.join(sentences).split()
@@ -126,6 +130,7 @@ class Example(object):
       _, self.target = self.get_dec_inp_targ_seqs(abs_ids_extend_vocab, hps.max_dec_steps, start_decoding, stop_decoding)
 
     # Store the original strings
+    self.original_article_clean = original_article_clean
     self.original_article = article
     self.original_abstract = abstract
     self.original_abstract_sents = abstract_sentences
@@ -267,6 +272,7 @@ class Batch(object):
     self.original_articles = [ex.original_article for ex in example_list] # list of lists
     self.original_abstracts = [ex.original_abstract for ex in example_list] # list of lists
     self.original_abstracts_sents = [ex.original_abstract_sents for ex in example_list] # list of list of lists
+    self.original_articles_clean = [ex.original_article_clean for ex in example_list]
 
 
 class Batcher(object):

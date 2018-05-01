@@ -114,7 +114,12 @@ class BeamSearchDecoder(object):
         self.write_for_rouge(original_abstract_sents, decoded_words, counter) # write ref summary and decoded summary to file, to eval with pyrouge later
         counter += 1 # this is how many examples we've decoded
       else:
-        print_results(article_withunks, abstract_withunks, decoded_output) # log output to screen
+        if (FLAGS.keep_stopwords < 1.0) or (FLAGS.keep_word < 1.0) or (FLAGS.shufle_sentences):
+          original_article_clean = batch.original_articles_clean[0] #string
+          original_article_withunks = data.show_art_oovs(original_article_clean, self._vocab)
+          print_results(article_withunks, abstract_withunks, decoded_output, original_article_withunks)
+        else:
+          print_results(article_withunks, abstract_withunks, decoded_output) # log output to screen
         self.write_for_attnvis(article_withunks, abstract_withunks, decoded_words, best_hyp.attn_dists, best_hyp.p_gens) # write info to .json file for visualization tool
 
         # Check if SECS_UNTIL_NEW_CKPT has elapsed; if so return so we can load a new checkpoint
@@ -189,12 +194,14 @@ class BeamSearchDecoder(object):
     tf.logging.info('Wrote visualization data to %s', output_fname)
 
 
-def print_results(article, abstract, decoded_output):
+def print_results(article, abstract, decoded_output, original_article_clean=None):
   """Prints the article, the reference summmary and the decoded summary to screen"""
   print("---------------------------------------------------------------------------")
-  tf.logging.info('ARTICLE:  %s', article)
-  tf.logging.info('REFERENCE SUMMARY: %s', abstract)
-  tf.logging.info('GENERATED SUMMARY: %s', decoded_output)
+  if original_article_clean:
+    tf.logging.info('ORIGINAL ARTICLE: %s\n', original_article_clean) 
+  tf.logging.info('ARTICLE:  %s\n', article)
+  tf.logging.info('REFERENCE SUMMARY: %s\n', abstract)
+  tf.logging.info('GENERATED SUMMARY: %s\n', decoded_output)
   print("---------------------------------------------------------------------------")
 
 
